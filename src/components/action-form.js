@@ -1,15 +1,14 @@
 import React from "react";
 import { TextField , Box, Button} from "@mui/material";
-import env from 'react-dotenv'
+import { emailConfig } from "../config";
 import emailjs from 'emailjs-com'
 
 export default function ActionForm(){
 
     const submitHandler = (e)=>{
         e.preventDefault()
-        // const params = [userEmailToken]
-        const params = [env.GMAIL_SERVICE_ID, env.GMAIL_TEMPLATE_ID, {message: 'Hello World'}, env.GMAIL_USER_TOKEN]
-        console.log(params)
+        const {template, serviceId, token} = emailConfig
+        const params = [serviceId, template, {message: 'Hello World'}, token]
         emailjs.send(...params)
             .then((result) => {
                 console.log(result.text);
